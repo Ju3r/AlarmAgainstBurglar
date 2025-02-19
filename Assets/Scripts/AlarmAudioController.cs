@@ -1,15 +1,18 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class AlarmAudioController : MonoBehaviour
 {
-    public float _targetVolume { get; private set; }
-
     [SerializeField] private AudioSource _audioSource;
 
     private float _fadeDuration = 5f;
     private float _maxVolume = 1f;
     private float _minVolume = 0f;
+
+    private Coroutine _currentCoroutine;
+
+    public float _targetVolume { get; private set; }
 
     private void Awake()
     {
@@ -17,20 +20,35 @@ public class AlarmAudioController : MonoBehaviour
         _audioSource.volume = _minVolume;
     }
 
-    private void Update()
+    private IEnumerator ChangeVolume()
     {
-        if (_audioSource.volume != _targetVolume)
+        while (_audioSource.volume != _targetVolume)
+        {
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, Time.deltaTime / _fadeDuration);
+
+            yield return null;
+        }
     }
 
     public void ChangeTargetVolumeToMax()
     {
         _targetVolume = _maxVolume;
+        RelaunchCoroutine();
     }
-    
+
     public void ChangeTargetVolumeToMin()
     {
         _targetVolume = _minVolume;
-        Debug.Log("”Ã≈Õ‹ÿ»ÀŒ—‹");
+        RelaunchCoroutine();
+    }
+
+    private void RelaunchCoroutine()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+
+        _currentCoroutine = StartCoroutine(ChangeVolume());
     }
 }
