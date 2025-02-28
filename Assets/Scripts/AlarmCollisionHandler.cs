@@ -3,17 +3,18 @@ using UnityEngine;
 
 public class AlarmCollisionHandler : MonoBehaviour
 {
-    public event Action<bool> BurglarInHouse;
+    public event Action BurglarInHouse;
+    public event Action BurglarOutHouse;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Burglar burglar))
-            BurglarInHouse?.Invoke(true);
+            BurglarInHouse?.Invoke();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Burglar burglar))
-            BurglarInHouse?.Invoke(false);
+            BurglarOutHouse?.Invoke();
     }
 }

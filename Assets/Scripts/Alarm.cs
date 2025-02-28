@@ -1,32 +1,35 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AlarmCollisionHandler), typeof(AlarmAudioController))]
+[RequireComponent(typeof(AlarmCollisionHandler), typeof(AlarmAudio))]
 public class Alarm : MonoBehaviour
 {
     private AlarmCollisionHandler _collisionHandler;
-    private AlarmAudioController _audioController;
+    private AlarmAudio _audioController;
 
     private void Awake()
     {
         _collisionHandler = GetComponent<AlarmCollisionHandler>();
-        _audioController = GetComponent<AlarmAudioController>();
+        _audioController = GetComponent<AlarmAudio>();
     }
 
     private void OnEnable()
     {
         _collisionHandler.BurglarInHouse += OnBurglarInHouse;
+        _collisionHandler.BurglarOutHouse += OnBurglarOutHouse;
     }
 
     private void OnDisable()
     {
         _collisionHandler.BurglarInHouse -= OnBurglarInHouse;
+        _collisionHandler.BurglarOutHouse -= OnBurglarOutHouse;
     }
 
-    private void OnBurglarInHouse(bool inHouse)
+    private void OnBurglarInHouse()
+    { 
+        _audioController.ChangeTargetVolumeToMax();
+    }
+    private void OnBurglarOutHouse()
     {
-        if (inHouse)
-            _audioController.ChangeTargetVolumeToMax();
-        else
-            _audioController.ChangeTargetVolumeToMin();
+        _audioController.ChangeTargetVolumeToMin();
     }
 }
