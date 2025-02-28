@@ -1,14 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AlarmCollisionHandler), typeof(AlarmAudio))]
+[RequireComponent(typeof(AlarmBurglarDetector), typeof(AlarmAudio))]
 public class Alarm : MonoBehaviour
 {
-    private AlarmCollisionHandler _collisionHandler;
+    private AlarmBurglarDetector _collisionHandler;
     private AlarmAudio _audioController;
 
     private void Awake()
     {
-        _collisionHandler = GetComponent<AlarmCollisionHandler>();
+        _collisionHandler = GetComponent<AlarmBurglarDetector>();
         _audioController = GetComponent<AlarmAudio>();
     }
 
@@ -28,6 +28,7 @@ public class Alarm : MonoBehaviour
     { 
         _audioController.ChangeTargetVolumeToMax();
     }
+
     private void OnBurglarOutHouse()
     {
         _audioController.ChangeTargetVolumeToMin();

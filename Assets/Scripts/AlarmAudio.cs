@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,21 +16,6 @@ public class AlarmAudio : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.volume = _minVolume;
-    }
-
-    private IEnumerator ChangeVolume(float targetVolume)
-    {
-        while (_audioSource.volume != targetVolume)
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, Time.deltaTime / _fadeDuration);
-
-            yield return null;
-        }
-
-        if (_audioSource.isPlaying && _audioSource.volume == _minVolume)
-        {
-            _audioSource.Stop();
-        }
     }
 
     public void ChangeTargetVolumeToMax()
@@ -57,5 +41,20 @@ public class AlarmAudio : MonoBehaviour
         }
 
         _currentCoroutine = StartCoroutine(ChangeVolume(targetVolume));
+    }
+
+    private IEnumerator ChangeVolume(float targetVolume)
+    {
+        while (_audioSource.volume != targetVolume)
+        {
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, Time.deltaTime / _fadeDuration);
+
+            yield return null;
+        }
+
+        if (_audioSource.isPlaying && _audioSource.volume == _minVolume)
+        {
+            _audioSource.Stop();
+        }
     }
 }

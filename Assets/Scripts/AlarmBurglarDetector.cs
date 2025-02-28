@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class AlarmCollisionHandler : MonoBehaviour
+public class AlarmBurglarDetector : MonoBehaviour
 {
     public event Action BurglarInHouse;
     public event Action BurglarOutHouse;

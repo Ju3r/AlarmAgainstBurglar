@@ -5,16 +5,16 @@ public class InputReader : MonoBehaviour
     private const string HorizontalAxis = "Horizontal";
     private const string VerticalAxis = "Vertical";
 
-    private float DirectionX;
-    private float DirectionY;
+    private float _directionX;
+    private float _directionY;
 
     public Vector2 Direction { get; private set; }
 
     private void Update()
     {
-        DirectionX = Input.GetAxis(HorizontalAxis);
-        DirectionY = Input.GetAxis(VerticalAxis);
+        _directionX = Input.GetAxis(HorizontalAxis);
+        _directionY = Input.GetAxis(VerticalAxis);
 
-        Direction = new Vector2(DirectionX, DirectionY);
+        Direction = new Vector2(_directionX, _directionY);
     }
 }

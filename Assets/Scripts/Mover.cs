@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
-    private const float SpeedCoefficient = 50f;
+    [SerializeField] private const float SpeedCoefficient = 50f;
 
     private Rigidbody2D _rigidbody;
     private float _speed = 1f;
